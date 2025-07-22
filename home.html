@@ -73,6 +73,73 @@
   </div>
 
   <script>
+    const quizData = [
+      {
+        question: "Lumbini city location?",
+        options: ["Pokhara", "Kathmandu", "Tilottama", "Bhaktapur"],
+        answer: 1,
+      },
+      {
+        question: "Which language runs in the browser?",
+        options: ["Java", "Python", "C", "JavaScript"],
+        answer: 3,
+      },
+      {
+        question: "What does HTML stand for?",
+        options: [
+          "Hyper Text Makeup Language",
+          "HighText Markup Language",
+          "HyperText Markup Language",
+          "None",
+        ],
+        answer: 2,
+      },
+    ];
+    // console.log(quizData);
+    
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    function loadQuestion() {
+      const q = quizData[currentQuestion];
+      document.getElementById("question").innerText = q.question;
+      document.getElementById("opt0").textContent = q.options[0];
+      document.getElementById("opt1").textContent = q.options[1];
+      document.getElementById("opt2").textContent = q.options[2];
+      document.getElementById("opt3").textContent = q.options[3];
+
+      // Clear selected radio
+      document.querySelectorAll('input[name="option"]').forEach((el) => (el.checked = false));
+    }
+
+    function nextQuestion() {
+      const selected = document.querySelector('input[name="option"]:checked');
+      if (!selected) {
+        alert("Please select an option!");
+        return;
+      }
+
+      const answer = parseInt(selected.value);
+      if (answer === quizData[currentQuestion].answer) {
+        score++;
+      }
+
+      currentQuestion++;
+
+      if (currentQuestion < quizData.length) {
+        loadQuestion();
+      } else {
+        document.getElementById("quiz").style.display = "none";
+        document.getElementById("result").style.display = "block";
+        document.getElementById(
+          "result"
+        ).textContent = `You scored ${score} out of ${quizData.length}!`;
+      }
+    }
+
+    
+    loadQuestion();
   </script>
 </body>
 
